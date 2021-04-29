@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Update a room</title>
+</head>
+<body>
+    @* Pravimo formu koja gađa AddRoom funkciju unutar Room controllera;
+        preko forme kupimo podatke koje ubacujemo u MongoDB preko AddRoom funkcije *@
+    @using (Html.BeginForm("UpdateRoom", "RoomController"))
+    {
+    <form name="Update-Form">
+        @Html.AntiForgeryToken()
+
+        <label for="RoomNumber">Room number:</label>
+        <input for="RoomNumber" type="text" name="RoomNumber" value="@ViewData["RoomNumber"]" />
+
+        <label for="NumberOfBeds">Number of beds:</label>
+        <input for="NumberOfBeds" type="number" name="NumberOfBeds" value="@ViewData["NumberOfBeds"]" />
+
+        <label for="Price">Price:</label>
+        <input for="Price" type="number" name="Price" value="@ViewData["Price"]" />
+
+        <label for="Floor">Floor:</label>
+        <input for="Floor" type="number" name="Floor" value="@ViewData["Floor"]" />
+        <label for="IsOccupied">Is the room occupied?</label>
+
+
+        @if (true == Convert.ToBoolean(ViewData["IsOccupied"]))
+        {
+            <div>
+                Yes<input type="radio" checked id="IsOccupied" name="IsOccupied" value="Yes" />
+                No<input type="radio" id="IsOccupied" name="IsOccupied" value="No" />
+            </div>
+        }
+        @if (false == Convert.ToBoolean(ViewData["IsOccupied"]))
+        {
+            <div>
+                Yes<input type="radio" id="IsOccupied" name="IsOccupied" value="Yes" />
+                No<input type="radio" checked id="IsOccupied" name="IsOccupied" value="No" />
+            </div>
+        }
+
+        <label for="HasMiniFridge">Does the room have a mini fridge?</label>
+        @if (true == Convert.ToBoolean(ViewData["IsOccupied"]))
+        {
+            <div>
+                Yes <input type="radio" checked id="HasMiniFridge" name="HasMiniFridge" value="Yes" />
+                No <input type="radio" id="HasMiniFridge" name="HasMiniFridge" value="No" />
+            </div>
+        }
+        @if (true != Convert.ToBoolean(ViewData["IsOccupied"]))
+        {
+            <div>
+                Yes <input type="radio" id="HasMiniFridge" name="HasMiniFridge" value="Yes" />
+                No <input type="radio" checked id="HasMiniFridge" name="HasMiniFridge" value="No" />
+            </div>
+        }
+        <input type="hidden" name ="RoomID" value="@ViewData["RoomID"]" />
+        <input type="submit" value="Update" asp-controller="Room" asp-route-id='@ViewData["RoomID"]' asp-action="UpdateRoom"/>
+
+    </form>
+
+    }
+
+    @* Proveravamo da li je TempData iz kontrolera prazan; ako nije, znamo da je došlo do neke greške prilikom unosa; koristimo
+        JavaScript da prikažemo grešku koju smo spremili u kontroleru*@
+    @if (TempData["alertMessage"] != null)
+    {
+        <script type="text/javascript">
+                    alert('@TempData["alertMessage"]');
+        </script>
+    }
+
+
+</body>
+</html>

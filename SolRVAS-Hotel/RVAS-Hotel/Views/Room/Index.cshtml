@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooms</title>
+</head>
+<body>
+
+    @* U foreach petlji prolazimo kroz listu svih soba (koju smo izvukli u kontroleru UserController) i za svaku sobu iz
+        MongoDB kolekcije ispisujemo podatke*@
+
+    @foreach (var x in (List<Room>)ViewData["ListOfRooms"])
+    {
+
+
+        <p>Room number: @x.RoomNumber</p>
+        <p>Number of beds: @x.NumberOfBeds</p>
+        <p>Price: @x.Price</p>
+        <p>Floor: @x.Floor</p>
+        <p>Is the room occuppied? @x.IsOccupied</p>
+        <p>Minifridge included? @x.HasMiniFridge</p>
+
+        @Html.ActionLink("Update", "RoomEdit", routeValues: new  {RoomID = x.RoomID })
+
+
+
+    }
+
+</body>
+</html>
