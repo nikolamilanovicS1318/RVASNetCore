@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Add a room</title>
+</head>
+<body>
+    @* Pravimo formu koja gađa AddRoom funkciju unutar Room controllera;
+        preko forme kupimo podatke koje ubacujemo u MongoDB preko AddRoom funkcije *@
+    @using (Html.BeginForm("AddRoom", "RoomController", FormMethod.Post))
+    {
+        <form>
+            <label for="RoomNumber">Room number:</label>
+            <input for="RoomNumber" type="text" name="RoomNumber" />
+
+            <label for="NumberOfBeds">Number of beds:</label>
+            <input for="NumberOfBeds" type="number" name="NumberOfBeds" />
+
+            <label for="Price">Price:</label>
+            <input for="Price" type="number" name="Price" />
+
+            <label for="Floor">Floor:</label>
+            <input for="Floor" type="number" name="Floor" />
+            <label for="IsOccuppied">Is the room occupied?</label>
+            Yes<input type="radio" name="IsOccupied" value="Yes" />
+            No<input type="radio" name="IsOccupied" value="No" />
+
+            <label for="HasMiniFridge">Does the room have a mini fridge?</label>
+            Yes <input type="radio" name="HasMiniFridge" value="Yes" />
+            No <input type="radio" name="HasMiniFridge" value="No" />
+            <input type="submit" value="Add room" asp-action="AddRoom" />
+
+        </form>
+
+    }
+
+    @* Proveravamo da li je TempData iz kontrolera prazan; ako nije, znamo da je došlo do neke greške prilikom unosa; koristimo 
+        JavaScript da prikažemo grešku koju smo spremili u kontroleru*@
+    @if (TempData["alertMessage"] != null)
+            {
+                <script type="text/javascript">
+                    alert('@TempData["alertMessage"]');
+                </script>
+            }
+ 
+
+</body>
+</html>
