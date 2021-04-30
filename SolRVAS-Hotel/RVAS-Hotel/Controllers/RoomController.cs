@@ -9,7 +9,8 @@ using RVAS_Hotel.Models;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using MongoDB.Bson;
-
+using RestSharp;
+using System.Text.Json;
 
 namespace RVAS_Hotel.Controllers
 {
@@ -36,6 +37,18 @@ namespace RVAS_Hotel.Controllers
                 AllRooms.Add(x);
             }
             ViewData["ListOfRooms"] = AllRooms;
+
+
+            //Dodavanje API funkcionalnosti - uzimamo u JSON formatu sve sobe
+            var client = new RestClient("https://sws-group-7-hotel-api.herokuapp.com/api/v1/rooms");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+
+            //var data = JsonSerializer.Deserialize<Room>(response.Content);
+
+            ViewData["API_Rooms"] = response.Content;
+
             return View();
         }
         public IActionResult RoomAdd()

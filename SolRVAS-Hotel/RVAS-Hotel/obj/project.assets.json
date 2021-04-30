@@ -214,6 +214,15 @@
           }
         }
       },
+      "RestSharp/106.11.7": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/RestSharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/RestSharp.dll": {}
+        }
+      },
       "SharpCompress/0.23.0": {
         "type": "package",
         "dependencies": {
@@ -619,6 +628,22 @@
         "runtimes/win/native/mongocrypt.dll"
       ]
     },
+    "RestSharp/106.11.7": {
+      "sha512": "NzndH096CTulvq+ihr7u1mBJ29oukdi9A8bypQJk+kaHxbRzTTrtgsEEQAb04ptTUZmQa7cgo7uF5z7NuEPX1Q==",
+      "type": "package",
+      "path": "restsharp/106.11.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net452/RestSharp.dll",
+        "lib/net452/RestSharp.xml",
+        "lib/netstandard2.0/RestSharp.dll",
+        "lib/netstandard2.0/RestSharp.xml",
+        "restsharp.106.11.7.nupkg.sha512",
+        "restsharp.nuspec",
+        "restsharp.png"
+      ]
+    },
     "SharpCompress/0.23.0": {
       "sha512": "HBbT47JHvNrsZX2dTBzUBOSzBt+EmIRGLIBkbxcP6Jef7DB4eFWQX5iHWV3Nj7hABFPCjISrZ8s0z72nF2zFHQ==",
       "type": "package",
@@ -818,23 +843,24 @@
     "net5.0": [
       "Microsoft.AspNetCore.Authentication.OpenIdConnect >= 5.0.5",
       "MongoDB.Driver >= 2.12.2",
-      "MongoDB.Driver.Core >= 2.12.2"
+      "MongoDB.Driver.Core >= 2.12.2",
+      "RestSharp >= 106.11.7"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Sif\\.nuget\\packages\\": {}
+    "C:\\Users\\Radovan\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Sif\\Desktop\\RVAS Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
+      "projectUniqueName": "C:\\Users\\Radovan\\Desktop\\RVAS PROJEKAT\\RVASNetCore\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
       "projectName": "RVAS-Hotel",
-      "projectPath": "C:\\Users\\Sif\\Desktop\\RVAS Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
-      "packagesPath": "C:\\Users\\Sif\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Sif\\Desktop\\RVAS Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\obj\\",
+      "projectPath": "C:\\Users\\Radovan\\Desktop\\RVAS PROJEKAT\\RVASNetCore\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
+      "packagesPath": "C:\\Users\\Radovan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Radovan\\Desktop\\RVAS PROJEKAT\\RVASNetCore\\SolRVAS-Hotel\\RVAS-Hotel\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Sif\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Radovan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -871,6 +897,10 @@
           "MongoDB.Driver.Core": {
             "target": "Package",
             "version": "[2.12.2, )"
+          },
+          "RestSharp": {
+            "target": "Package",
+            "version": "[106.11.7, )"
           }
         },
         "imports": [
