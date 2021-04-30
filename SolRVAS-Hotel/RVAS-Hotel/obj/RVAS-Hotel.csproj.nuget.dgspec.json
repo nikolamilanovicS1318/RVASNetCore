@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Sif\\Desktop\\RVAS Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj": {}
+    "C:\\Users\\Sif\\Desktop\\Novi\\RVASNetCore-main\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Sif\\Desktop\\RVAS Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj": {
+    "C:\\Users\\Sif\\Desktop\\Novi\\RVASNetCore-main\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Sif\\Desktop\\RVAS Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
+        "projectUniqueName": "C:\\Users\\Sif\\Desktop\\Novi\\RVASNetCore-main\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
         "projectName": "RVAS-Hotel",
-        "projectPath": "C:\\Users\\Sif\\Desktop\\RVAS Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
+        "projectPath": "C:\\Users\\Sif\\Desktop\\Novi\\RVASNetCore-main\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
         "packagesPath": "C:\\Users\\Sif\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Sif\\Desktop\\RVAS Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\obj\\",
+        "outputPath": "C:\\Users\\Sif\\Desktop\\Novi\\RVASNetCore-main\\SolRVAS-Hotel\\RVAS-Hotel\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Sif\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -51,6 +51,14 @@
             "MongoDB.Driver.Core": {
               "target": "Package",
               "version": "[2.12.2, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[106.11.7, )"
             }
           },
           "imports": [

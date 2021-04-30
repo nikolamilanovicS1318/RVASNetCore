@@ -9,6 +9,9 @@ using RVAS_Hotel.Models;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using MongoDB.Bson;
+using RestSharp;
+using System.Text.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace RVAS_Hotel.Controllers
@@ -36,6 +39,38 @@ namespace RVAS_Hotel.Controllers
                 AllRooms.Add(x);
             }
             ViewData["ListOfRooms"] = AllRooms;
+
+
+            //Dodavanje API funkcionalnosti - uzimamo u JSON formatu sve sobe
+            var client = new RestClient("https://sws-group-7-hotel-api.herokuapp.com/api/v1/rooms");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+
+            // var data = JsonSerializer.Deserialize<Room>(response.Content);
+
+           // Parsiranje JSON-a u JObject
+            JObject JsonObject = JObject.Parse(response.Content);
+           
+            // Lista u kojoj se čuvaju JTokeni, kasnije će se proslediti na Index kroz ViewData, preko foreach petlje se prikazuju svi članovi
+            List<JToken> JTokenList = new List<JToken>();
+           // Foreach petlja u kojoj prolazimo kroz sve JObjecte; JObject nema implementaciju IEnumeracije pa ne može da radi direktno sa Foreach petljom, pa je castovan u JToken
+            foreach (JProperty room in (JToken)JsonObject)
+            {
+                string name = room.Name;
+                JToken value = room.Value;
+                // Foreach petlja u kojoj prolazimo kroz sve tokene i dodajemo ih u listu koju smo napravili iznad
+                foreach(JToken x in value)
+                {
+                    JTokenList.Add(x);
+                }
+
+            }
+            // Ubacujemo popunjenu listu u ViewData za korišćenje unutar index stranice
+            ViewData["Data"] = JTokenList;
+            ViewData["API_Rooms"] = response.Content;
+         
+
             return View();
         }
         public IActionResult RoomAdd()
