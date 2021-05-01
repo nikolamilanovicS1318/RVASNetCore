@@ -94,6 +94,11 @@ namespace RVAS_Hotel
              pattern: "/edit_room/{id?}",
              defaults: new { controller = "Room", action = "RoomEdit" }
              );
+                endpoints.MapControllerRoute(
+       name: "room-delete",
+       pattern: "/delete_room/{id?}",
+       defaults: new { controller = "Room", action = "DeleteRoom" }
+       );
 
 
 

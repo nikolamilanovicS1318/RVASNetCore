@@ -11,6 +11,8 @@ using MongoDB.Driver.Linq;
 using MongoDB.Bson;
 using RestSharp;
 using System.Text.Json;
+using Newtonsoft.Json.Linq;
+
 
 namespace RVAS_Hotel.Controllers
 {
@@ -45,9 +47,29 @@ namespace RVAS_Hotel.Controllers
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
 
-            //var data = JsonSerializer.Deserialize<Room>(response.Content);
+            // var data = JsonSerializer.Deserialize<Room>(response.Content);
 
+           // Parsiranje JSON-a u JObject
+            JObject JsonObject = JObject.Parse(response.Content);
+           
+            // Lista u kojoj se čuvaju JTokeni, kasnije će se proslediti na Index kroz ViewData, preko foreach petlje se prikazuju svi članovi
+            List<JToken> JTokenList = new List<JToken>();
+           // Foreach petlja u kojoj prolazimo kroz sve JObjecte; JObject nema implementaciju IEnumeracije pa ne može da radi direktno sa Foreach petljom, pa je castovan u JToken
+            foreach (JProperty room in (JToken)JsonObject)
+            {
+                string name = room.Name;
+                JToken value = room.Value;
+                // Foreach petlja u kojoj prolazimo kroz sve tokene i dodajemo ih u listu koju smo napravili iznad
+                foreach(JToken x in value)
+                {
+                    JTokenList.Add(x);
+                }
+
+            }
+            // Ubacujemo popunjenu listu u ViewData za korišćenje unutar index stranice
+            ViewData["Data"] = JTokenList;
             ViewData["API_Rooms"] = response.Content;
+         
 
             return View();
         }
@@ -169,6 +191,22 @@ namespace RVAS_Hotel.Controllers
             var result = collection.UpdateOne(filter, update);
             return RedirectToAction("Index");
            
+        }
+        public ActionResult DeleteRoom(string RoomID)
+        {
+            var DB = Connection.DBName;
+            var collection = DB.GetCollection<Room>("Room");
+            var filter = Builders<Room>.Filter.Eq(r => r.RoomID, RoomID);
+            try
+            {
+                collection.DeleteOne(filter);
+            }
+            catch (Exception ex)
+            {
+                TempData["alertMessage"] = "There was an error during the deletion process. Please make sure you're trying to delete a valid room (and that you have adequate permission to do so).";
+            }
+            
+            return RedirectToAction("Index");
         }
    
     }
