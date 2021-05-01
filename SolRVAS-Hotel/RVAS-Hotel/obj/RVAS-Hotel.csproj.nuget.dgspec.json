@@ -40,15 +40,27 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
-            "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
+            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[5.0.5, )"
             },
             "MongoDB.Driver": {
-              "target": "Package",
-              "version": "[2.12.2, )"
-            },
-            "MongoDB.Driver.Core": {
               "target": "Package",
               "version": "[2.12.2, )"
             },
