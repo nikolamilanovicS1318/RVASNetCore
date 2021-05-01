@@ -7,6 +7,7 @@
     <title>Rooms</title>
 </head>
 <body>
+ 
 
 
     @* U foreach petlji prolazimo kroz listu svih soba (koju smo izvukli u kontroleru UserController) i za svaku sobu iz
@@ -54,9 +55,26 @@
                     </script>
     }
 
+<<<<<<< HEAD
 
 
 
+=======
+    @*@ViewData["API_Rooms"]*@
+    @{ 
+
+        var JTList = (List<Newtonsoft.Json.Linq.JToken>)ViewData["Data"];
+        foreach(Newtonsoft.Json.Linq.JToken j in JTList)
+
+        { 
+               <div>
+                  Room ID: @j.SelectToken("@id")
+                  Room type: @j.SelectToken("@type")
+               </div>
+            }
+    }
+ 
+>>>>>>> 7fcb772d788a216c7f2b1baca9707050bfa9f64f
 
 
 </body>

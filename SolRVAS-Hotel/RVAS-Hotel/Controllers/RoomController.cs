@@ -48,6 +48,7 @@ namespace RVAS_Hotel.Controllers
             IRestResponse response = client.Execute(request);
 
             // var data = JsonSerializer.Deserialize<Room>(response.Content);
+<<<<<<< HEAD
 
            // Parsiranje JSON-a u JObject
             JObject JsonObject = JObject.Parse(response.Content);
@@ -65,6 +66,25 @@ namespace RVAS_Hotel.Controllers
                     JTokenList.Add(x);
                 }
 
+=======
+
+           // Parsiranje JSON-a u JObject
+            JObject JsonObject = JObject.Parse(response.Content);
+           
+            // Lista u kojoj se čuvaju JTokeni, kasnije će se proslediti na Index kroz ViewData, preko foreach petlje se prikazuju svi članovi
+            List<JToken> JTokenList = new List<JToken>();
+           // Foreach petlja u kojoj prolazimo kroz sve JObjecte; JObject nema implementaciju IEnumeracije pa ne može da radi direktno sa Foreach petljom, pa je castovan u JToken
+            foreach (JProperty room in (JToken)JsonObject)
+            {
+                string name = room.Name;
+                JToken value = room.Value;
+                // Foreach petlja u kojoj prolazimo kroz sve tokene i dodajemo ih u listu koju smo napravili iznad
+                foreach(JToken x in value)
+                {
+                    JTokenList.Add(x);
+                }
+
+>>>>>>> 7fcb772d788a216c7f2b1baca9707050bfa9f64f
             }
             // Ubacujemo popunjenu listu u ViewData za korišćenje unutar index stranice
             ViewData["Data"] = JTokenList;
