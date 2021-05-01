@@ -890,11 +890,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Sif\\Desktop\\Novi\\RVASNetCore-main\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
+      "projectUniqueName": "C:\\Users\\Sif\\Desktop\\RVAS_Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
       "projectName": "RVAS-Hotel",
-      "projectPath": "C:\\Users\\Sif\\Desktop\\Novi\\RVASNetCore-main\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
+      "projectPath": "C:\\Users\\Sif\\Desktop\\RVAS_Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
       "packagesPath": "C:\\Users\\Sif\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Sif\\Desktop\\Novi\\RVASNetCore-main\\SolRVAS-Hotel\\RVAS-Hotel\\obj\\",
+      "outputPath": "C:\\Users\\Sif\\Desktop\\RVAS_Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Sif\\AppData\\Roaming\\NuGet\\NuGet.Config",

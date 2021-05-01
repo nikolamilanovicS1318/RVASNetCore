@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Elz1YBFeE+nswkKSh8tufK/93xOMco56+I+ivmVzWxeMw+AOOrRP1nA3pWDIjwgu84hc7M80irhFcKODBONtuA==",
+  "dgSpecHash": "m96GoluhVc0bWNatAtRnnxyQ8L+Y8RbTvwqx7C7hPy7XAJenvVtypy4CO7hlul++XYrcIVSfHoKQtUPz7pp5Iw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Sif\\Desktop\\Novi\\RVASNetCore-main\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
+  "projectFilePath": "C:\\Users\\Sif\\Desktop\\RVAS_Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Sif\\.nuget\\packages\\dnsclient\\1.4.0\\dnsclient.1.4.0.nupkg.sha512",
     "C:\\Users\\Sif\\.nuget\\packages\\microsoft.aspnetcore.authentication.openidconnect\\5.0.5\\microsoft.aspnetcore.authentication.openidconnect.5.0.5.nupkg.sha512",
