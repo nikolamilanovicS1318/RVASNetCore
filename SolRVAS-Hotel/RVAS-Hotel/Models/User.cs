@@ -5,58 +5,49 @@ using MongoDB.Bson.Serialization.Attributes;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
+using AspNetCore.Identity.MongoDbCore;
+using AspNetCore.Identity.MongoDbCore.Models;
+using MongoDbGenericRepository.Attributes;
 
-public class User
+[CollectionName("User")]
+public class User : MongoIdentityUser<Guid>
 {
+    
+    private string _Name;
 
-    // Deklaracija svojstava / atributa korisnika
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    private string _UserID;
-
-
-    public string UserID
+    public string Name
     {
-        get { return _UserID; }
-        set { _UserID = value; }
+        get { return _Name; }
+        set { _Name = value; }
     }
-    [BsonElement("Username")]
-    public string Username { get; set; }
-    [BsonElement("Name")]
-    public string Name { get; set; }
-    [BsonElement("Surname")]
-    public string Surname { get; set; }
-    [BsonElement("Password")]
-    private string _Password;
+    private string _Surname;
 
-    public string PW
+    public string Surname
     {
-        get { return _Password; }
-
-        // prilikom setovanja vrednosti passworda hashujemo vrednost radi sigurnosti; korišćen Pbkdf2 algoritam prikazan u MS dokumentaciji ovde: https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-5.0 
-        set
-        {
-            // Generisanje 128-bitnog salta pomoću RNG-ja
-            byte[] salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-            // izvlači se 256-bitni podključ korišćenjem HMACSHA1 algoritma, 10000 iteracija (veći broj za više iteracija i veću nasumičnost, manji broj za brži odziv aplikacije)
-
-            string HashedPW = Convert.ToBase64String(KeyDerivation.Pbkdf2(password: value, salt: salt, prf: KeyDerivationPrf.HMACSHA1, iterationCount: 10000, numBytesRequested: 256 / 8));
-            _Password = HashedPW;
-        }
+        get { return _Surname; }
+        set { _Surname = value; }
     }
-    [BsonElement("Email")]
-    private string _Email;
 
-    public string EmailAddress
+
+    public User() : base()
     {
-        get { return _Email; }
-        set { _Email = value; }
+        
+    }
+    public User(string  Username, string Email) : base(Username, Email)
+    {
+       
+    }
+
+    public User(string Username, string Name, string Surname, string Password, string Email)
+    {
+        
     }
 
 
 
+}
+public class ApplicationRole : MongoIdentityRole<Guid>
+{
+    public ApplicationRole() : base() { }
+    public ApplicationRole(string roleName) : base(roleName) { }
 }

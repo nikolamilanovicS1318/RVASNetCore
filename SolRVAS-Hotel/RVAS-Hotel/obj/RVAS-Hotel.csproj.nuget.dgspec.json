@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Radovan\\Desktop\\RVAS PROJEKAT\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj": {}
+    "C:\\Users\\Sif\\Desktop\\RVAS_Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Radovan\\Desktop\\RVAS PROJEKAT\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj": {
+    "C:\\Users\\Sif\\Desktop\\RVAS_Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Radovan\\Desktop\\RVAS PROJEKAT\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
+        "projectUniqueName": "C:\\Users\\Sif\\Desktop\\RVAS_Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
         "projectName": "RVAS-Hotel",
-        "projectPath": "C:\\Users\\Radovan\\Desktop\\RVAS PROJEKAT\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
-        "packagesPath": "C:\\Users\\Radovan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Radovan\\Desktop\\RVAS PROJEKAT\\SolRVAS-Hotel\\RVAS-Hotel\\obj\\",
+        "projectPath": "C:\\Users\\Sif\\Desktop\\RVAS_Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
+        "packagesPath": "C:\\Users\\Sif\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Sif\\Desktop\\RVAS_Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Radovan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Sif\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,29 +40,43 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AspNetCore.Identity.MongoDbCore": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.2, )"
+            },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.5, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.4, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.4, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[5.0.2, )"
             },
             "MongoDB.Driver": {
               "target": "Package",
-              "version": "[2.12.2, )"
+              "version": "[2.12.3, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

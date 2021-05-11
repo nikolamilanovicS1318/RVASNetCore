@@ -7,65 +7,86 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using BCrypt.Net;
 
 
 namespace RVAS_Hotel.Controllers
 {
     public class UserController : Controller
     {
-        
 
+        [HttpGet]
         public IActionResult Register()
         {
+
             return View();
         }
-    
+
         public IActionResult Privacy()
         {
             return View();
         }
+
+        // Registracija korisnika
         [HttpPost]
-        public ActionResult RegisterUser()
+        public IActionResult RegisterUser()
         {
-            // Uspostavljamo konekciju sa bazom, instanciramo novog korisnika, popunjavamo njegove podatke preko vrednosti iz forme, nakon toga ga ubacujemo u bazu preko InsertOne metode; na kraju vraćamo redirect na home page (PW je hashovan unutar User modela, prilikom setovanja svojstva)
-            try
+            // Deklaracija parametara za konekciju sa bazom, ciljanje određene MongoDB kolekcije (User)
+            DBConnection Connection = new DBConnection();
+            var DB = Connection.DBName;
+            var collection = DB.GetCollection<User>("User");
+            ApplicationRole role = new ApplicationRole("User");
+
+
+            // Setovanje parametara novog korisnika na vrednosti iz forme
+            User newUser = new User()
             {
-                DBConnection Connection = new DBConnection();
-                var DB = Connection.DBName;
-                var collection = DB.GetCollection<User>("User");
-                User newUser = new User()
-                {
-                    Username = Request.Form["Username"],
-                    Name = Request.Form["Name"],
-                    Surname = Request.Form["Surname"],
-                    PW = Request.Form["Password"],
-                    EmailAddress = Request.Form["Email"]
-                };
-                if (newUser.Username == String.Empty || newUser.Name == String.Empty || newUser.Surname == String.Empty || newUser.PW == String.Empty || newUser.EmailAddress == String.Empty)
-                {
-                    TempData["alertMessage"] = "Please fill all of the fields before proceeding to register!";
-                    return RedirectToAction("Register");
-                }
-                collection.InsertOne(newUser);
-                return RedirectToAction("Home");
-                
-            }
-            /****************************************************************************************************************** 
-              
-              Ako je došlo do greške prilikom registracije korisnika, prosleđujemo poruku do cshtml-a gde je prikazujemo uz pomoć JS-a (ukoliko je to potrebno) i vraćamo redirect na istu stranicu kako bi korisnik mogao da ispravi grešku u unosu
-              
-             *****************************************************************************************************************/
-            catch (Exception ex)
+                UserName = Request.Form["Username"],
+                NormalizedUserName = Request.Form["UserName"],
+                Email = Request.Form["Email"],
+                NormalizedEmail = Request.Form["Email"],
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(Request.Form["Password"]),
+                Name = Request.Form["Name"],
+                Surname = Request.Form["Surname"]
+
+            };
+
+            // Ispisujemo grešku ukoliko je neko od polja prazno prilikom submitovanja podataka
+            if (newUser.UserName == String.Empty || newUser.Email == String.Empty || Request.Form["Password"].ToString() == String.Empty || newUser.Name == String.Empty || newUser.Surname == String.Empty)
             {
-                TempData["alertMessage"] = ex.ToString();
+                TempData["alertMessage"] = "Please fill all of the fields before submitting your entry!";
                 return RedirectToAction("Register");
             }
-            
+            // Provera da li postoji korisnik sa unetom email adresom ili unetim korisničkim imenom; ukoliko postoji takav korisnik, ispisuje se odgovarajuća greška na stranici i obustavlja se proces pre unošenja u bazu; ukoliko ne postoji, ubacujemo novog korisnika u bazu i redirektujemo na stranicu koja prikazuje sve sobe
+
+            var existingUser = collection.Find(u => u.UserName == Request.Form["Username"]).FirstOrDefault();
+            var existingUserTwo = collection.Find(u => u.Email == Request.Form["Email"]).FirstOrDefault();
+            if (existingUser != null)
+            {
+
+                TempData["alertMessage"] = "The username is already taken!";
+                return RedirectToAction("Register");
+
+            }
+            else if (existingUserTwo != null)
+            {
+                TempData["alertMessage"] = "An account with the entered email address already exists!";
+                return RedirectToAction("Register");
+            }
+            else
+            {
+                newUser.AddRole(role.Id);
+                collection.InsertOne(newUser);
+                return RedirectToAction("Index", "Room");
+            }
+
+
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

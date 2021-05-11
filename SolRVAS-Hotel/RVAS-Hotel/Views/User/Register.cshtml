@@ -9,38 +9,39 @@
 
     @using (Html.BeginForm("RegisterUser", "UserController"))
     {
-        @Html.AntiForgeryToken()
-        <form>
-            <label for="Username">Username:</label>
-            <input for="Username" type="text" name="Username" />
+                @Html.AntiForgeryToken()
+                <form>
+                    
 
-            <label for="Name">Ime:</label>
-            <input for="Name" type="text" name="Name" />
+                    <label for="Username">Username:</label>
+                    <input for="Username" type="text" id="txtUsername" name="Username" />
 
-            <label for="Surname">Prezime:</label>
-            <input for="Surname" type="text" name="Surname" />
+                    <label for="Name">Ime:</label>
+                    <input for="Name" type="text" id="txtName" name="Name"/>
 
-            <label for="Password">Password:</label>
-            <input for="Password" type="password" name="Password" />
+                    <label for="Surname">Prezime:</label>
+                    <input for="Surname" type="text" id="txtSurname" name="Surname" />
 
-            <label for="Email">Email:</label>
-            <input for="Email" type="text" name="Email" />
+                    <label for="Password">Password:</label>
+                    <input for="Password" type="password" id="Password" name="Password" />
 
-            <input type="submit" value="Register" asp-action="RegisterUser" />
+                    <label for="Email">Email:</label>
+                    <input for="Email" type="text" id="txtEmail" name="Email" />
 
-        </form>
+                    <input type="submit" value="Register" asp-action="RegisterUser" />
 
-    }
+                </form>
+                }
 
     @* Proveravamo da li je TempData iz kontrolera prazan; ako nije, znamo da je došlo do neke greške prilikom unosa; koristimo
         JavaScript da prikažemo grešku koju smo spremili u kontroleru*@
+
+
     @if (TempData["alertMessage"] != null)
     {
-        <script type="text/javascript">
+<script type="text/javascript">
                     alert('@TempData["alertMessage"]');
-        </script>
-    }
-
-
+</script>
+}
 </body>
 </html>

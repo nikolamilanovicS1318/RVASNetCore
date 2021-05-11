@@ -1,9 +1,12 @@
+
+using AspNetCore.Identity.MongoDbCore.Extensions;
+using AspNetCore.Identity.MongoDbCore.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,13 +30,48 @@ namespace RVAS_Hotel
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+           
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+          
+
+          // Konfiguracija MongoDB Identiteta; podešene opcije
+           /* var mongoDbIdentityConfiguration = new MongoDbIdentityConfiguration
+            {
+                MongoDbSettings = new MongoDbSettings
+                {
+                    ConnectionString = Configuration["DatabaseSettings:ConnectionString"],
+                    DatabaseName = Configuration["DatabaseSettings:DatabaseName"]
+                },
+                IdentityOptionsAction = options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequiredLength = 8;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireLowercase = false;
+                    
+
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                    options.Lockout.MaxFailedAccessAttempts = 20;
+                    
+
+                    options.User.RequireUniqueEmail = true;
+                    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@.-_";
+                }
+            };
+           */
+
+            services.AddDefaultIdentity<User>().AddMongoDbStores<User, ApplicationRole, Guid>(
+                        Configuration["DatabaseSettings:ConnectionString"],
+                        Configuration["DatabaseSettings:DatabaseName"]
+
+                ).AddDefaultTokenProviders();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AuthorizeFilter());
+            });
+               
             services.AddControllersWithViews();
         }
 
@@ -44,6 +82,9 @@ namespace RVAS_Hotel
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+
+                app.UseAuthentication();
+                app.UseAuthorization();
             }
             else
             {
@@ -74,6 +115,8 @@ namespace RVAS_Hotel
                 pattern: "/register",
                 defaults: new { controller = "User", action = "Register" }
                 );
+               
+
 
                 // Ruta za dodavanje soba
                 endpoints.MapControllerRoute(

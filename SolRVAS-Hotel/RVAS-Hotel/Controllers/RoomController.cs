@@ -12,16 +12,16 @@ using MongoDB.Bson;
 using RestSharp;
 using System.Text.Json;
 using Newtonsoft.Json.Linq;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace RVAS_Hotel.Controllers
 {
-
+    
     public class RoomController : Controller
     {
         DBConnection Connection = new DBConnection();
 
-
+        
         [HttpGet]
         public IActionResult Index()
         {
