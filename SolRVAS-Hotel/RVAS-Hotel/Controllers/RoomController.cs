@@ -66,11 +66,6 @@ namespace RVAS_Hotel.Controllers
                     JTokenList.Add(x);
                 }
 
-
-
-  
-
-
             }
             // Ubacujemo popunjenu listu u ViewData za korišćenje unutar index stranice
             ViewData["Data"] = JTokenList;
@@ -214,6 +209,39 @@ namespace RVAS_Hotel.Controllers
             
             return RedirectToAction("Index");
         }
-   
+
+        public ActionResult ApiDetails(int id)
+        {
+            //Dodavanje API funkcionalnosti - uzimamo u JSON formatu podatke o pojedinacnoj sobi
+            var client = new RestClient("https://sws-group-7-hotel-api.herokuapp.com/api/v1/rooms/" + id);
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+
+            // Parsiranje JSON-a u JObject
+            var number = JObject.Parse(response.Content)["@id"];
+            var description = JObject.Parse(response.Content)["description"];
+            var category = JObject.Parse(response.Content)["category"];
+            var size = JObject.Parse(response.Content)["size"];
+            var capacity = JObject.Parse(response.Content)["capacity"];  
+            var price = JObject.Parse(response.Content)["price"];
+
+
+
+
+            // Ubacujemo popunjenu listu u ViewData za korišćenje unutar index stranice
+            ViewData["API_Room_Number"] = number;
+            ViewData["API_Room_Desc"] = description;
+            ViewData["API_Room_Category"] = category;
+            ViewData["API_Room_Size"] = size;
+            ViewData["API_Room_Capacity"] = capacity;
+            ViewData["API_Room_Price"] = price;
+
+            ViewData["API_Details"] = response.Content;
+
+            return View();
+        }
+
+
     }
 }

@@ -91,22 +91,30 @@ namespace RVAS_Hotel
 
                 // Ruta na kojoj se ažuriraju podaci sobe
                 endpoints.MapControllerRoute(
-              name: "update-room",
-              pattern: "/update_room/{id?}",
-              defaults: new { controller = "Room", action = "UpdateRoom" }
-              );
+                name: "update-room",
+                pattern: "/update_room/{id?}",
+                defaults: new { controller = "Room", action = "UpdateRoom" }
+                );
 
                 // Ruta na kojoj se prikazuje stranica za ažuriranje podataka sobe
                 endpoints.MapControllerRoute(
-             name: "room-update",
-             pattern: "/edit_room/{id?}",
-             defaults: new { controller = "Room", action = "RoomEdit" }
-             );
+                 name: "room-update",
+                 pattern: "/edit_room/{id?}",
+                 defaults: new { controller = "Room", action = "RoomEdit" }
+                 );
+
                 endpoints.MapControllerRoute(
-       name: "room-delete",
-       pattern: "/delete_room/{id?}",
-       defaults: new { controller = "Room", action = "DeleteRoom" }
-       );
+                name: "room-delete",
+                pattern: "/delete_room/{id?}",
+                defaults: new { controller = "Room", action = "DeleteRoom" }
+                );
+
+                //Ruta za prikazivanje podataka pojedinacne sobe
+                endpoints.MapControllerRoute(
+                name: "api-show",
+                pattern: "/api_show/{id?}",
+                defaults: new { controller = "Room", action = "ApiDetails" }
+                );
 
                 endpoints.MapRazorPages();
 

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Details</title>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <h2 class="mb-4">Room details</h2>
+        </div>
+
+        <div class="col-md-10 m-auto">
+
+            <p> <span class="font-weight-bold">Room number :  </span> @ViewData["API_Room_Number"].ToString().Remove(0, 14)</p>
+            <p> <span class="font-weight-bold">Description :  </span>@ViewData["API_Room_Desc"] </p>
+            <p> <span class="font-weight-bold">Category :  </span> @ViewData["API_Room_Category"]</p>
+            <p> <span class="font-weight-bold">Room size :  </span> @ViewData["API_Room_Size"] &#x33A1; </p>
+            <p> <span class="font-weight-bold">Capacity :  </span> @ViewData["API_Room_Capacity"] </p>
+            <p> <span class="font-weight-bold">Price :  </span> @ViewData["API_Room_Price"] $ </p>
+            
+        </div>
+
+
+
+
+    </div>
+
+</body>
+</html>

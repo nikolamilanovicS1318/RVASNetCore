@@ -1,5 +1,6 @@
 /all_rooms -> prikaz svih soba
 /add_room -> dodavanje nove sobe
 /register -> registracija korisnika
+/api_show/{id} -> detalji pojedinacne api sobe
 
 Na /all_rooms putanji svaka soba ima link koji vodi ka stranici za update 

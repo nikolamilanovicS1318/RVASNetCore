@@ -7,15 +7,15 @@
     <title>Rooms</title>
 </head>
 <body>
- 
+    <div class="container-fluid">
 
 
-    @* U foreach petlji prolazimo kroz listu svih soba (koju smo izvukli u kontroleru UserController) i za svaku sobu iz
+        @* U foreach petlji prolazimo kroz listu svih soba (koju smo izvukli u kontroleru UserController) i za svaku sobu iz
         MongoDB kolekcije ispisujemo podatke*@
 
-    @foreach (var x in (List<Room>)ViewData["ListOfRooms"])
-    {
-
+        @foreach (var x in (List<Room>)ViewData["ListOfRooms"])
+        {
+            <div class="col-md-4 mb-4">
 
                 <p>Room number: @x.RoomNumber</p>
                 <p>Number of beds: @x.NumberOfBeds</p>
@@ -24,47 +24,52 @@
                 <p>Is the room occuppied? @x.IsOccupied</p>
                 <p>Minifridge included? @x.HasMiniFridge</p>
 
-                @Html.ActionLink("Update", "RoomEdit", routeValues: new { RoomID = x.RoomID })
-                @Html.ActionLink("Delete", "DeleteRoom", routeValues: new { RoomID = x.RoomID })
-    }
+                <button type="button" class="btn btn-primary mr-3"> @Html.ActionLink("Update", "RoomEdit", routeValues: new { RoomID = x.RoomID })</button>
+                <button type="button" class="btn btn-danger"> @Html.ActionLink("Delete", "DeleteRoom", routeValues: new { RoomID = x.RoomID })</button>
+            </div>
+        }
 
-    @*@ViewData["API_Rooms"]*@
+        @*@ViewData["API_Rooms"]*@
 
-    @* Deklarišemo varijablu koja uzima vrednost ViewData["Data"] iz kontrolera; kako bi ovo radilo, ViewData objekat mora da se
+        @* Deklarišemo varijablu koja uzima vrednost ViewData["Data"] iz kontrolera; kako bi ovo radilo, ViewData objekat mora da se
         castuje u listu tipa JToken - posle ovoga u foreach petlji prolazimo kroz sve JTokene i printujemo odgovarajuće
         vrednosti *@
-    @{ 
-        var JTList = (List<Newtonsoft.Json.Linq.JToken>)ViewData["Data"];
-        foreach (Newtonsoft.Json.Linq.JToken j in JTList)
+        
+        <div class="col-md-12">
+            <h2>API ROOMS</h2>
+        </div>
+        @{
+            var JTList = (List<Newtonsoft.Json.Linq.JToken>)ViewData["Data"];
+            foreach (Newtonsoft.Json.Linq.JToken j in JTList)
 
-        {
-                        <div>
-                            Room ID: @j.SelectToken("@id")
-                            Room type: @j.SelectToken("@type")
-                        </div> 
-        } 
-    }
+            {
 
-    @* Proveravamo da li je TempData iz kontrolera prazan; ako nije, znamo da je došlo do neke greške; koristimo
+                <div class="col-md-4 float-left mb-5">
+                            <p>Room Number: @j.SelectToken("@id").ToString().Remove(0, 14) </p>
+                            <p> Room type: @j.SelectToken("@type").ToString().Substring(6, 4) </p>
+
+                    <button type="button" class="btn btn-primary mr-3">
+                    
+                    @Html.ActionLink("More details", "ApiDetails", "Room", routeValues: new { id = @Convert.ToInt32(j.SelectToken("@id").ToString().Remove(0, 14)) })
+                
+                    </button>
+                
+                </div>
+            }
+        }
+
+        @* Proveravamo da li je TempData iz kontrolera prazan; ako nije, znamo da je došlo do neke greške; koristimo
         JavaScript da prikažemo grešku koju smo spremili u kontroleru*@
 
-    @if (TempData["alertMessage"] != null)
-    {
-                <script type="text/javascript">
+        @if (TempData["alertMessage"] != null)
+        {
+            <script type="text/javascript">
                     alert('@TempData["alertMessage"]');
-                    </script>
-    }
+            </script>
+        }
 
-<<<<<<< HEAD
-
-
-
-=======
-    @*@ViewData["API_Rooms"]*@
-  
- 
->>>>>>> 7fcb772d788a216c7f2b1baca9707050bfa9f64f
-
+        
+    </div>
 
 </body>
 </html>
