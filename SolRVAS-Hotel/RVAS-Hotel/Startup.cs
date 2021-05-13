@@ -3,6 +3,7 @@ using AspNetCore.Identity.MongoDbCore.Extensions;
 using AspNetCore.Identity.MongoDbCore.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -33,44 +34,46 @@ namespace RVAS_Hotel
            
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-          
-
-          // Konfiguracija MongoDB Identiteta; podešene opcije
-           /* var mongoDbIdentityConfiguration = new MongoDbIdentityConfiguration
+            services.AddSession(options =>
             {
-                MongoDbSettings = new MongoDbSettings
-                {
-                    ConnectionString = Configuration["DatabaseSettings:ConnectionString"],
-                    DatabaseName = Configuration["DatabaseSettings:DatabaseName"]
-                },
-                IdentityOptionsAction = options =>
-                {
-                    options.Password.RequireDigit = false;
-                    options.Password.RequiredLength = 8;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireUppercase = true;
-                    options.Password.RequireLowercase = false;
-                    
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            // Konfiguracija MongoDB Identiteta; podešene opcije
+            /* var mongoDbIdentityConfiguration = new MongoDbIdentityConfiguration
+             {
+                 MongoDbSettings = new MongoDbSettings
+                 {
+                     ConnectionString = Configuration["DatabaseSettings:ConnectionString"],
+                     DatabaseName = Configuration["DatabaseSettings:DatabaseName"]
+                 },
+                 IdentityOptionsAction = options =>
+                 {
+                     options.Password.RequireDigit = false;
+                     options.Password.RequiredLength = 8;
+                     options.Password.RequireNonAlphanumeric = false;
+                     options.Password.RequireUppercase = true;
+                     options.Password.RequireLowercase = false;
 
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                    options.Lockout.MaxFailedAccessAttempts = 20;
-                    
 
-                    options.User.RequireUniqueEmail = true;
-                    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@.-_";
-                }
-            };
-           */
+                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                     options.Lockout.MaxFailedAccessAttempts = 20;
+
+
+                     options.User.RequireUniqueEmail = true;
+                     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@.-_";
+                 }
+             };
+            */
 
             services.AddDefaultIdentity<User>().AddMongoDbStores<User, ApplicationRole, Guid>(
                         Configuration["DatabaseSettings:ConnectionString"],
                         Configuration["DatabaseSettings:DatabaseName"]
 
                 ).AddDefaultTokenProviders();
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(new AuthorizeFilter());
-            });
+ 
                
             services.AddControllersWithViews();
         }
@@ -96,10 +99,10 @@ namespace RVAS_Hotel
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
             
@@ -158,6 +161,19 @@ namespace RVAS_Hotel
                 pattern: "/api_show/{id?}",
                 defaults: new { controller = "Room", action = "ApiDetails" }
                 );
+
+                //Login Ruta
+
+                endpoints.MapControllerRoute(
+               name: "login-page",
+               pattern: "/login",
+               defaults: new { controller = "User", action = "LoginPage" }
+               );
+                endpoints.MapControllerRoute(
+             name: "login",
+             pattern: "/login_page",
+             defaults: new { controller = "User", action = "Login" }
+             );
 
                 endpoints.MapRazorPages();
 

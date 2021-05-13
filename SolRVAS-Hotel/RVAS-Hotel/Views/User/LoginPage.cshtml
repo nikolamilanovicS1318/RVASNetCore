@@ -1,40 +1,29 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
+    <title>Login</title>
 </head>
 <body>
     <div class="row">
         <div class="col-md-4">
             <section>
                 @Html.AntiForgeryToken()
-                <form id="account" asp-controller="User" asp-action="RegisterUser" method="post">
+                <form id="account" asp-controller="User" asp-action="LoginUser" method="post">
                     <h4>Use a local account to log in.</h4>
                     <hr />
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
                         <label for="userName">Username:</label>
-                        <input type="text" id="txtUsername" name="userName" />
-                    </div>
-                    <div class="form-group">
-                        <label for="Name">Name:</label>
-                        <input type="text" id="txtName" name="Name" />
-                    </div>
-                    <div class="form-group">
-                        <label for="Surname">Surname:</label>
-                        <input type="text" id="txtSurname" name="Surname" />
+                        <input type="text" id="userName" name="userName" />
+
                     </div>
                     <div class="form-group">
                         <label for="Password">Password:</label>
                         <input type="password" id="Password" name="Password" />
                     </div>
-                    <div class="form-group">
-                        <label for="Email">Email:</label>
-                        <input type="email" id="txtEmail" name="Email" />
-                    </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" class="btn btn-primary">Log in</button>
                     </div>
 
                 </form>

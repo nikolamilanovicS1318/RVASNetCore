@@ -13,6 +13,7 @@ using RestSharp;
 using System.Text.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace RVAS_Hotel.Controllers
 {
@@ -46,7 +47,7 @@ namespace RVAS_Hotel.Controllers
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
-
+    
             // var data = JsonSerializer.Deserialize<Room>(response.Content);
 
 
@@ -70,13 +71,36 @@ namespace RVAS_Hotel.Controllers
             // Ubacujemo popunjenu listu u ViewData za korišćenje unutar index stranice
             ViewData["Data"] = JTokenList;
             ViewData["API_Rooms"] = response.Content;
-         
 
-            return View();
+
+            if (HttpContext.Session.GetString("Session") != null)
+            {
+                return View();
+            }
+
+            else
+            {
+                TempData["alertMessage"] = "You must be logged in to view that page";
+                return RedirectToAction("LoginPage", "User");
+            }
+
+
+
         }
         public IActionResult RoomAdd()
         {
-            return View();
+
+            if (HttpContext.Session.GetString("Session") != null)
+            {
+                return View();
+            }
+
+            else
+            {
+                TempData["alertMessage"] = "You must be logged in to view that page";
+                return RedirectToAction("LoginPage", "User");
+            }
+
         }
 
         public IActionResult Privacy()

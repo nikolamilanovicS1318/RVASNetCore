@@ -8,6 +8,7 @@
         preko forme kupimo podatke koje ubacujemo u MongoDB preko AddRoom funkcije *@
     @using (Html.BeginForm("AddRoom", "RoomController", FormMethod.Post))
     {
+        @Html.AntiForgeryToken()
         <form>
             <label for="RoomNumber">Room number:</label>
             <input for="RoomNumber" type="text" name="RoomNumber" />
@@ -33,15 +34,15 @@
 
     }
 
-    @* Proveravamo da li je TempData iz kontrolera prazan; ako nije, znamo da je došlo do neke greške prilikom unosa; koristimo 
+    @* Proveravamo da li je TempData iz kontrolera prazan; ako nije, znamo da je došlo do neke greške prilikom unosa; koristimo
         JavaScript da prikažemo grešku koju smo spremili u kontroleru*@
     @if (TempData["alertMessage"] != null)
-            {
-                <script type="text/javascript">
+    {
+        <script type="text/javascript">
                     alert('@TempData["alertMessage"]');
-                </script>
-            }
- 
+        </script>
+    }
+
 
 </body>
 </html>
