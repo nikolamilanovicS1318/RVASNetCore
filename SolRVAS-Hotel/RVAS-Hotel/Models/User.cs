@@ -46,8 +46,3 @@ public class User : MongoIdentityUser<Guid>
 
 
 }
-public class ApplicationRole : MongoIdentityRole<Guid>
-{
-    public ApplicationRole() : base() { }
-    public ApplicationRole(string roleName) : base(roleName) { }
-}

@@ -11,6 +11,7 @@ using BCrypt.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
+
 namespace RVAS_Hotel.Controllers
 {
     public class UserController : Controller
@@ -120,13 +121,7 @@ namespace RVAS_Hotel.Controllers
                 return RedirectToAction("LoginPage", "User");
 
             }
-            // Setting a cookie's value and/or subvalue using the HttpCookie class HttpCookie cookie;
-            // if(Request.Cookies[txtName.Text] == null) cookie = new HttpCookie(txtName.Text, LoggedUser.Username);
-            // else cookie = Request.Cookies[txtName.Text]; if(txtSubValueName.Text.Length > 0) cookie.Values.Add(txtSubValueName.Text, txtSubValueValue.Text);
-            // cookie.Expires = System.DateTime.Now.AddDays(1); // tomorrow Response.AppendCookie(cookie); 
-            // Retrieving a cookie's value(s) if(!Request.Cookies[txtName.Text].HasKeys) lblResult.Text = "The value of the <b>" + txtName.Text + "</b> cookie is <b>" + Request.Cookies[txtName.Text].Value.ToString() + "</b>";
-            // else { lblResult.Text = "The value of the <b>" + txtName.Text + "</b> cookie is <b>" + Request.Cookies[txtName.Text].Value.ToString() + "</b>, with subvalues:<br>";
-            // foreach(string key in Request.Cookies[txtName.Text].Values.Keys) { lblResult.Text += "[" + key + " = " + Request.Cookies[txtName.Text].Values[key].ToString() + "]<br>"; } }
+            
             bool VerifyPassword = BCrypt.Net.BCrypt.Verify(Request.Form["Password"], LoggedUser.PasswordHash);
             if (VerifyPassword)
             {

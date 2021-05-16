@@ -221,6 +221,7 @@ namespace RVAS_Hotel.Controllers
         {
             var DB = Connection.DBName;
             var collection = DB.GetCollection<Room>("Room");
+            Room originalRoom = collection.Find(r => r.RoomID == RoomID).FirstOrDefault();
             Room roomToUpdate = new Room()
             {
                 RoomNumber = Convert.ToInt32(Request.Form["RoomNumber"]),
@@ -229,13 +230,28 @@ namespace RVAS_Hotel.Controllers
                 Floor = Convert.ToInt32(Request.Form["Floor"]),
                 IsOccupied = Request.Form["IsOccupied"],
                 HasMiniFridge = Request.Form["HasMiniFridge"],
-
+                ImageName = Request.Form["RoomNumber"].ToString() + "D" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png"
 
             };
 
-
+            var file = HttpContext.Request.Form.Files["ImageName"];
+            var filePath = Directory.GetCurrentDirectory() + "/wwwroot/images";
+            if (!System.IO.Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
+            }
+            var deletionPath = Path.Combine(filePath, originalRoom.ImageName);
+            if (System.IO.File.Exists(deletionPath))
+            {
+                System.IO.File.Delete(deletionPath);
+            }
+            var path = Path.Combine(filePath, roomToUpdate.ImageName);
+            FileStream fs = new FileStream(path, FileMode.Create);
+            file.CopyTo(fs);
+            fs.Close();
+          
             var filter = Builders<Room>.Filter.Eq(r => r.RoomID, RoomID);
-            var update = Builders<Room>.Update.Set(x => x.RoomNumber, roomToUpdate.RoomNumber).Set(x => x.NumberOfBeds, roomToUpdate.NumberOfBeds).Set(x => x.Price, roomToUpdate.Price).Set(x => x.Floor, roomToUpdate.Floor).Set(x => x.IsOccupied, roomToUpdate.IsOccupied).Set(x => x.HasMiniFridge, roomToUpdate.HasMiniFridge);
+            var update = Builders<Room>.Update.Set(x => x.RoomNumber, roomToUpdate.RoomNumber).Set(x => x.NumberOfBeds, roomToUpdate.NumberOfBeds).Set(x => x.Price, roomToUpdate.Price).Set(x => x.Floor, roomToUpdate.Floor).Set(x => x.IsOccupied, roomToUpdate.IsOccupied).Set(x => x.HasMiniFridge, roomToUpdate.HasMiniFridge).Set(x => x.ImageName, roomToUpdate.ImageName);
             var result = collection.UpdateOne(filter, update);
             return RedirectToAction("Index");
 
