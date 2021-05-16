@@ -7,6 +7,8 @@
     <title>Rooms</title>
 </head>
 <body>
+    
+    @using System.Drawing;
     <div class="container-fluid">
 
         @* U foreach petlji prolazimo kroz listu svih soba (koju smo izvukli u kontroleru UserController) i za svaku sobu iz
@@ -14,6 +16,7 @@
 
         @foreach (var x in (List<Room>)ViewData["ListOfRooms"])
         {
+            
             <div class="col-md-4 mb-4">
 
                 <p>Room number: @x.RoomNumber</p>
@@ -22,7 +25,8 @@
                 <p>Floor: @x.Floor</p>
                 <p>Is the room occuppied? @x.IsOccupied</p>
                 <p>Minifridge included? @x.HasMiniFridge</p>
-
+                <p><img src="./images/@x.ImageName" /> </p>
+                
                 <button type="button" class="btn btn-primary mr-3"> @Html.ActionLink("Update", "RoomEdit", routeValues: new { RoomID = x.RoomID })</button>
                 <button type="button" class="btn btn-danger"> @Html.ActionLink("Delete", "DeleteRoom", routeValues: new { RoomID = x.RoomID })</button>
             </div>

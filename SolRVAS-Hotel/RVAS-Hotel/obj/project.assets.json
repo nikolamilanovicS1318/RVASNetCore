@@ -7941,19 +7941,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dane\\.nuget\\packages\\": {}
+    "C:\\Users\\Sif\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dane\\Desktop\\Projekat_RVAS\\RVASNetCore\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
+      "projectUniqueName": "C:\\Users\\Sif\\Desktop\\RVAS_Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
       "projectName": "RVAS-Hotel",
-      "projectPath": "C:\\Users\\Dane\\Desktop\\Projekat_RVAS\\RVASNetCore\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
-      "packagesPath": "C:\\Users\\Dane\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dane\\Desktop\\Projekat_RVAS\\RVASNetCore\\SolRVAS-Hotel\\RVAS-Hotel\\obj\\",
+      "projectPath": "C:\\Users\\Sif\\Desktop\\RVAS_Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\RVAS-Hotel.csproj",
+      "packagesPath": "C:\\Users\\Sif\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Sif\\Desktop\\RVAS_Projekat\\SolRVAS-Hotel\\RVAS-Hotel\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Dane\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Sif\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

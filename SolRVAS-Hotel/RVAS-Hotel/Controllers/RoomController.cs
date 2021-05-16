@@ -9,20 +9,28 @@ using RVAS_Hotel.Models;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using MongoDB.Bson;
+using System.Web;
 using RestSharp;
 using System.Text.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace RVAS_Hotel.Controllers
 {
-    
+
     public class RoomController : Controller
     {
         DBConnection Connection = new DBConnection();
 
-        
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public RoomController(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
         [HttpGet]
         public IActionResult Index()
         {
@@ -47,22 +55,22 @@ namespace RVAS_Hotel.Controllers
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
-    
+
             // var data = JsonSerializer.Deserialize<Room>(response.Content);
 
 
-           // Parsiranje JSON-a u JObject
+            // Parsiranje JSON-a u JObject
             JObject JsonObject = JObject.Parse(response.Content);
-           
+
             // Lista u kojoj se čuvaju JTokeni, kasnije će se proslediti na Index kroz ViewData, preko foreach petlje se prikazuju svi članovi
             List<JToken> JTokenList = new List<JToken>();
-           // Foreach petlja u kojoj prolazimo kroz sve JObjecte; JObject nema implementaciju IEnumeracije pa ne može da radi direktno sa Foreach petljom, pa je castovan u JToken
+            // Foreach petlja u kojoj prolazimo kroz sve JObjecte; JObject nema implementaciju IEnumeracije pa ne može da radi direktno sa Foreach petljom, pa je castovan u JToken
             foreach (JProperty room in (JToken)JsonObject)
             {
                 string name = room.Name;
                 JToken value = room.Value;
                 // Foreach petlja u kojoj prolazimo kroz sve tokene i dodajemo ih u listu koju smo napravili iznad
-                foreach(JToken x in value)
+                foreach (JToken x in value)
                 {
                     JTokenList.Add(x);
                 }
@@ -112,6 +120,7 @@ namespace RVAS_Hotel.Controllers
             bool res = String.IsNullOrEmpty(x.ToString());
             return res;
         }
+
         [HttpPost]
         public ActionResult AddRoom()
         {
@@ -121,8 +130,8 @@ namespace RVAS_Hotel.Controllers
               
              *****************************************************************************************************************/
             try
-            {
 
+            {
                 var DB = Connection.DBName;
                 var collection = DB.GetCollection<Room>("Room");
                 Room newRoom = new Room()
@@ -132,13 +141,27 @@ namespace RVAS_Hotel.Controllers
                     Price = float.Parse(Request.Form["Price"]),
                     Floor = Convert.ToInt32(Request.Form["Floor"]),
                     IsOccupied = Request.Form["IsOccupied"],
-                    HasMiniFridge = Request.Form["HasMiniFridge"]
+                    HasMiniFridge = Request.Form["HasMiniFridge"],
+                    ImageName = Request.Form["RoomNumber"].ToString() + "D" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png"
                 };
-                if (IsIntNull(newRoom.RoomNumber)|| IsIntNull(newRoom.NumberOfBeds) || newRoom.Price.Equals(null)|| IsIntNull(newRoom.Floor) || String.IsNullOrEmpty(newRoom.IsOccupied) || String.IsNullOrEmpty(newRoom.HasMiniFridge))
+
+                if (IsIntNull(newRoom.RoomNumber) || IsIntNull(newRoom.NumberOfBeds) || newRoom.Price.Equals(null) || IsIntNull(newRoom.Floor) || String.IsNullOrEmpty(newRoom.IsOccupied) || String.IsNullOrEmpty(newRoom.HasMiniFridge))
                 {
                     TempData["alertMessage"] = "Please make sure that you filled in all of the fields before proceeding to add a new room!";
                     return RedirectToActionPreserveMethod("RoomAdd");
                 }
+                // Kupimo sliku iz Requesta, setujemo putanju na direktorijum wwwroot/images unutar projekta, kopiramo sliku na tu putanju
+                var file = HttpContext.Request.Form.Files["ImageName"];
+                var filePath = Directory.GetCurrentDirectory() + "/wwwroot/images";
+                if (!System.IO.Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+
+                var path = Path.Combine(filePath, newRoom.ImageName);
+                FileStream fs = new FileStream(path, FileMode.Create);
+                file.CopyTo(fs);
+                fs.Close();
                 collection.InsertOne(newRoom);
 
                 return RedirectToAction("Index");
@@ -172,12 +195,12 @@ namespace RVAS_Hotel.Controllers
             ViewData["NumberOfBeds"] = roomToUpdate.NumberOfBeds;
             ViewData["Floor"] = roomToUpdate.Floor;
             ViewData["Price"] = roomToUpdate.Price;
-            
+
             if (roomToUpdate.IsOccupied == "Yes")
             {
                 ViewData["IsOccupied"] = true;
             }
-            else 
+            else
             {
                 ViewData["IsOccupied"] = false;
             }
@@ -185,7 +208,7 @@ namespace RVAS_Hotel.Controllers
             {
                 ViewData["HasMiniFridge"] = true;
             }
-            else 
+            else
             {
                 ViewData["HasMiniFridge"] = false;
             }
@@ -193,7 +216,7 @@ namespace RVAS_Hotel.Controllers
         }
 
         // Funkcija preko koje ažuriramo podatke sobe; prosleđujemo ID sobe koju hoćemo da ažuriramo, setujemo joj podatke iz polja iz forme, filtriramo željenu sobu preko RoomID-ja i onda ubacujemo (tj izmenjujemo) podatke
-       [HttpPost]
+        [HttpPost]
         public ActionResult UpdateRoom(string RoomID)
         {
             var DB = Connection.DBName;
@@ -208,29 +231,38 @@ namespace RVAS_Hotel.Controllers
                 HasMiniFridge = Request.Form["HasMiniFridge"],
 
 
-        };
-            
-       
+            };
+
+
             var filter = Builders<Room>.Filter.Eq(r => r.RoomID, RoomID);
             var update = Builders<Room>.Update.Set(x => x.RoomNumber, roomToUpdate.RoomNumber).Set(x => x.NumberOfBeds, roomToUpdate.NumberOfBeds).Set(x => x.Price, roomToUpdate.Price).Set(x => x.Floor, roomToUpdate.Floor).Set(x => x.IsOccupied, roomToUpdate.IsOccupied).Set(x => x.HasMiniFridge, roomToUpdate.HasMiniFridge);
             var result = collection.UpdateOne(filter, update);
             return RedirectToAction("Index");
-           
+
         }
         public ActionResult DeleteRoom(string RoomID)
         {
             var DB = Connection.DBName;
             var collection = DB.GetCollection<Room>("Room");
             var filter = Builders<Room>.Filter.Eq(r => r.RoomID, RoomID);
+            Room RoomToDelete = collection.Find(filter).FirstOrDefault();
             try
             {
+                // Trazimo sliku sobe uz pomoć imena slike sačuvanog u bazi, ako postoji slika brišemo iz storage-a pre brisanja same slike
+                var filePath = Directory.GetCurrentDirectory() + "/wwwroot/images";
+                var deletionPath = Path.Combine(filePath, RoomToDelete.ImageName);
+                if (System.IO.File.Exists(deletionPath))
+                {
+                    System.IO.File.Delete(deletionPath);
+                }
                 collection.DeleteOne(filter);
+
             }
             catch (Exception ex)
             {
-                TempData["alertMessage"] = "There was an error during the deletion process. Please make sure you're trying to delete a valid room (and that you have adequate permission to do so).";
+                TempData["alertMessage"] = ex.ToString();
             }
-            
+
             return RedirectToAction("Index");
         }
 
@@ -247,7 +279,7 @@ namespace RVAS_Hotel.Controllers
             var description = JObject.Parse(response.Content)["description"];
             var category = JObject.Parse(response.Content)["category"];
             var size = JObject.Parse(response.Content)["size"];
-            var capacity = JObject.Parse(response.Content)["capacity"];  
+            var capacity = JObject.Parse(response.Content)["capacity"];
             var price = JObject.Parse(response.Content)["price"];
 
 

@@ -40,6 +40,11 @@ namespace RVAS_Hotel.Models
         [BsonElement("HasMiniFridge")]
         public string HasMiniFridge { get; set; }
 
+        [BsonElement("ImageName")]
+        public string ImageName { get; set; }
+
+     
+
     }
 
 }
