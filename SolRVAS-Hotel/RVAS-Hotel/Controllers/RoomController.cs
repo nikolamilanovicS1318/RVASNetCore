@@ -314,6 +314,57 @@ namespace RVAS_Hotel.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult AvailableRooms()
+        {
+            /****************************************************************************************************************
+            
+            Deklarisana kolekcija koja sadrži tip Room koja ima uslov da ne sme biti Occupied; uz pomoć foreach petlje prolazimo kroz kolekciju i dodajemo sobe na listu, koju kasnije preko ViewData prosleđujemo i prikazujemo na front endu
 
-    }
+            *****************************************************************************************************************/
+
+            var database = Connection.DBName;
+            var coll = database.GetCollection<Room>("Room").AsQueryable<Room>();
+            var AllRooms = new List<Room>();
+            foreach (Room x in coll)
+            {
+                if (x.IsOccupied == "No")
+                {
+                    AllRooms.Add(x);
+                }
+            }
+            ViewData["ListOfRooms"] = AllRooms;
+
+
+            if (HttpContext.Session.GetString("Session") != null)
+            {
+                return View();
+            }
+
+            else
+            {
+                TempData["alertMessage"] = "You must be logged in to view that page";
+                return RedirectToAction("LoginPage", "User");
+            }
+        }
+        // Popunjavamo stranicu detaljima sobe podacima iz baze, odabranu sobu dobijamo preko parametra RoomID
+        [HttpGet]
+        public IActionResult RoomDetails(string RoomID)
+        {
+            Room roomDetails = new Room();
+            var DB = Connection.DBName;
+            var collection = DB.GetCollection<Room>("Room");
+            roomDetails = collection.Find(x => x.RoomID == RoomID).Limit(1).First();
+            ViewData["RoomID"] = roomDetails.RoomID;
+            ViewData["RoomNumber"] = roomDetails.RoomNumber;
+            ViewData["NumberOfBeds"] = roomDetails.NumberOfBeds;
+            ViewData["Floor"] = roomDetails.Floor;
+            ViewData["Price"] = roomDetails.Price;
+            ViewData["Slika"] = roomDetails.ImageName;
+            ViewData["IsOccupied"] = roomDetails.IsOccupied;
+            ViewData["HasMiniFridge"] = roomDetails.HasMiniFridge;
+            return View(roomDetails);
+
+        }
+        }
 }

@@ -31,6 +31,12 @@
                 <a class="nav-link text-dark" asp-area="Identity" asp-controller="User" asp-action="LogoutUser">Log out</a>
             </li>
         }
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("Session") != null)
+        {
+            <li class="nav-item">
+                <button type="button" class="btn btn-success mr-3"> @Html.ActionLink("User Profile", "UserProfile", "User", routeValues: new { UserID = HttpContextAccessor.HttpContext.Session.GetString("Session") })</button>
+            </li>
+        }
 
     }
 </ul>

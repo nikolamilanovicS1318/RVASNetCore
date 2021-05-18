@@ -16,19 +16,16 @@
 
         @foreach (var x in (List<Room>)ViewData["ListOfRooms"])
         {
-            
+
             <div class="col-md-4 mb-4">
 
                 <p>Room number: @x.RoomNumber</p>
-                <p>Number of beds: @x.NumberOfBeds</p>
                 <p>Price: @x.Price</p>
-                <p>Floor: @x.Floor</p>
-                <p>Is the room occuppied? @x.IsOccupied</p>
-                <p>Minifridge included? @x.HasMiniFridge</p>
                 <p><img src="./images/@x.ImageName" /> </p>
-                
+
                 <button type="button" class="btn btn-primary mr-3"> @Html.ActionLink("Update", "RoomEdit", routeValues: new { RoomID = x.RoomID })</button>
-                <button type="button" class="btn btn-danger"> @Html.ActionLink("Delete", "DeleteRoom", routeValues: new { RoomID = x.RoomID })</button>
+                <button type="button" class="btn btn-danger mr-3"> @Html.ActionLink("Delete", "DeleteRoom", routeValues: new { RoomID = x.RoomID })</button>
+                <button type="button" class="btn btn-primary mr-3"> @Html.ActionLink("More Details", "RoomDetails", routeValues: new { RoomID = x.RoomID })</button>
             </div>
         }
 
@@ -37,7 +34,7 @@
         @* Deklarišemo varijablu koja uzima vrednost ViewData["Data"] iz kontrolera; kako bi ovo radilo, ViewData objekat mora da se
         castuje u listu tipa JToken - posle ovoga u foreach petlji prolazimo kroz sve JTokene i printujemo odgovarajuće
         vrednosti *@
-        
+
         <div class="col-md-12">
             <h2>API ROOMS</h2>
         </div>
@@ -48,15 +45,15 @@
             {
 
                 <div class="col-md-4 float-left mb-5">
-                            <p>Room Number: @j.SelectToken("@id").ToString().Remove(0, 14) </p>
-                            <p> Room type: @j.SelectToken("@type").ToString().Substring(6, 4) </p>
+                    <p>Room Number: @j.SelectToken("@id").ToString().Remove(0, 14) </p>
+                    <p> Room type: @j.SelectToken("@type").ToString().Substring(6, 4) </p>
 
                     <button type="button" class="btn btn-primary mr-3">
-                    
-                    @Html.ActionLink("More details", "ApiDetails", "Room", routeValues: new { id = @Convert.ToInt32(j.SelectToken("@id").ToString().Remove(0, 14)) })
-                
+
+                        @Html.ActionLink("More details", "ApiDetails", "Room", routeValues: new { id = @Convert.ToInt32(j.SelectToken("@id").ToString().Remove(0, 14)) })
+
                     </button>
-                
+
                 </div>
             }
         }
@@ -70,8 +67,13 @@
                     alert('@TempData["alertMessage"]');
             </script>
         }
+        @if (TempData["stagod"] != null)
+        {
+            <script type="text/javascript">
+                    alert('@TempData["stagod"]');
+            </script>
+        }
 
-        
     </div>
 
 </body>

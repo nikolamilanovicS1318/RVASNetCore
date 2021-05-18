@@ -578,3 +578,7 @@ C:\Users\Dane\Desktop\Projekat_RVAS\RVASNetCore\SolRVAS-Hotel\RVAS-Hotel\obj\Deb
 C:\Users\Dane\Desktop\Projekat_RVAS\RVASNetCore\SolRVAS-Hotel\RVAS-Hotel\obj\Debug\net5.0\Razor\Views\User\LoginPage.cshtml.g.cs
 C:\Users\Sif\Desktop\RVAS_Projekat\SolRVAS-Hotel\RVAS-Hotel\obj\Debug\net5.0\Razor\Views\User\Login.cshtml.g.cs
 C:\Users\Sif\Desktop\RVAS_Projekat\SolRVAS-Hotel\RVAS-Hotel\obj\Debug\net5.0\Razor\Views\User\LoginPage.cshtml.g.cs
+C:\Users\Dane\Desktop\Projekat_RVAS\RVASNetCore\SolRVAS-Hotel\RVAS-Hotel\obj\Debug\net5.0\Razor\Views\User\Login.cshtml.g.cs
+C:\Users\Dane\Desktop\Projekat_RVAS\RVASNetCore\SolRVAS-Hotel\RVAS-Hotel\obj\Debug\net5.0\Razor\Views\Room\AvailableRooms.cshtml.g.cs
+C:\Users\Dane\Desktop\Projekat_RVAS\RVASNetCore\SolRVAS-Hotel\RVAS-Hotel\obj\Debug\net5.0\Razor\Views\Room\RoomDetails.cshtml.g.cs
+C:\Users\Dane\Desktop\Projekat_RVAS\RVASNetCore\SolRVAS-Hotel\RVAS-Hotel\obj\Debug\net5.0\Razor\Views\User\UserProfile.cshtml.g.cs

@@ -36,6 +36,8 @@ namespace RVAS_Hotel.Controllers
             return View();
         }
 
+ 
+
         // Registracija korisnika
         [HttpPost]
         public IActionResult RegisterUser()
@@ -108,6 +110,26 @@ namespace RVAS_Hotel.Controllers
            
         }
 
+        // Popunjavamo stranicu detaljima korisnika podacima iz baze, odabranog korisnika (Ulogovanog) dobijamo preko parametra UserID.
+        // UserID dobijamo tako sto preko view-a mu kazemo da dobija vrednost Session-a.
+
+        [HttpGet]
+        public IActionResult UserProfile(Guid UserID)
+        {
+            User profil = new User();
+            DBConnection Connection = new DBConnection();
+            var DB = Connection.DBName;
+            var collection = DB.GetCollection<User>("User");
+            profil = collection.Find(x => x.Id == UserID).First();
+            ViewData["Username"] = profil.UserName;
+            ViewData["Email"] = profil.Email;
+            ViewData["PasswordHash"] = profil.PasswordHash;
+            ViewData["Name"] = profil.Name;
+            ViewData["Surname"] = profil.Surname;
+            return View(profil);
+
+        }
+
 
         public IActionResult LoginUser()
         {
@@ -125,8 +147,11 @@ namespace RVAS_Hotel.Controllers
             bool VerifyPassword = BCrypt.Net.BCrypt.Verify(Request.Form["Password"], LoggedUser.PasswordHash);
             if (VerifyPassword)
             {
-                HttpContext.Session.SetString("Session", "User");
-                return RedirectToAction("Index", "Room");
+
+            // Postavljamo da sesija dobija vrednost ID-a Ulogovanog korisnika
+                HttpContext.Session.SetString("Session", LoggedUser.Id.ToString());
+
+                return RedirectToAction("Index", "Room", routeValues: new { Username = LoggedUser.UserName});
 
             }
             else
@@ -139,6 +164,9 @@ namespace RVAS_Hotel.Controllers
 
 
         }
+
+
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

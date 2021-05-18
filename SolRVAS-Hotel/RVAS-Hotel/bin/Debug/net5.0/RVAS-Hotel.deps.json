@@ -197,7 +197,6 @@
           "System.Diagnostics.TraceSource": "5.0.0.0",
           "System.Diagnostics.Tracing.Reference": "5.0.0.0",
           "System": "4.0.0.0",
-          "System.Drawing.Common.Reference": "4.0.0.1",
           "System.Drawing": "4.0.0.0",
           "System.Drawing.Primitives": "5.0.0.0",
           "System.Dynamic.Runtime": "5.0.0.0",
@@ -3035,12 +3034,6 @@
         },
         "compileOnly": true
       },
-      "System.Drawing.Common.Reference/4.0.0.1": {
-        "compile": {
-          "System.Drawing.Common.dll": {}
-        },
-        "compileOnly": true
-      },
       "System.Drawing/4.0.0.0": {
         "compile": {
           "System.Drawing.dll": {}
@@ -5556,11 +5549,6 @@
       "sha512": ""
     },
     "System/4.0.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "System.Drawing.Common.Reference/4.0.0.1": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
