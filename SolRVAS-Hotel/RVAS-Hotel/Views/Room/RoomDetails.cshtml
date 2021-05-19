@@ -8,27 +8,38 @@
 </head>
 <body>
 
-    <div class="container-fluid">
-        <div class="col-md-12">
-            <h2 class="mb-4">Room details</h2>
+    <div class="container-fluid m-auto">
+        <div class="row m-auto pl-3 col-md-10 mb-4">
+            <h1>Room Details</h1>
         </div>
+        <div class="row col-md-10 p-0 m-auto mb-5">
+            <div class="col-4 mb-4">
+                <div class="list-group" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-room_number-list" data-toggle="list" href="#list-room_number" role="tab" aria-controls="room_number">Room Number</a>
+                    <a class="list-group-item list-group-item-action" id="list-NumberOfBeds-list" data-toggle="list" href="#list-NumberOfBeds" role="tab" aria-controls="NumberOfBeds">Number of Beds</a>
+                    <a class="list-group-item list-group-item-action" id="list-Floor-list" data-toggle="list" href="#list-Floor" role="tab" aria-controls="Floor">Floor</a>
+                    <a class="list-group-item list-group-item-action" id="list-price-list" data-toggle="list" href="#list-price" role="tab" aria-controls="price">Price</a>
+                    <a class="list-group-item list-group-item-action" id="list-IsOccupied-list" data-toggle="list" href="#list-IsOccupied" role="tab" aria-controls="IsOccupied">Is Occupied</a>
+                    <a class="list-group-item list-group-item-action" id="list-HasMiniFridge-list" data-toggle="list" href="#list-HasMiniFridge" role="tab" aria-controls="HasMiniFridge">Has Mini Fridge</a>
 
-        <div class="col-md-10 m-auto">
-
-            <p> <span class="font-weight-bold">Room number :  </span>@ViewData["RoomNumber"] </p>
-            <p> <span class="font-weight-bold">Bed number :  </span> @ViewData["NumberOfBeds"]</p>
-            <p> <span class="font-weight-bold">Floor number:  </span> @ViewData["Floor"]</p>
-            <p> <span class="font-weight-bold">Price :  </span> @ViewData["Price"] </p>
-            <p> <span class="font-weight-bold">Is Occupied :  </span> @ViewData["IsOccupied"] </p>
-            <p> <span class="font-weight-bold">Has Mini Fridge :  </span> @ViewData["HasMiniFridge"] </p>
-            <p><img src="~/images/@ViewData["Slika"]" /></p>
+                </div>
+            </div>
+            <div class="col-8 m-auto">
+                <div class="tab-content pl-4 m-auto" id="nav-tabContent">
+                    <div class="tab-pane fade show active pl-4 m-auto" id="list-room_number" role="tabpanel" aria-labelledby="list-room_number-list"> <span style="font-size:60px;"> @ViewData["RoomNumber"] </span> </div>
+                    <div class="tab-pane fade pl-4 m-auto" id="list-NumberOfBeds" role="tabpanel" aria-labelledby="list-NumberOfBeds-list"> <span style="font-size:60px;"> @ViewData["NumberOfBeds"] Beds </span> </div>
+                    <div class="tab-pane fade pl-4 m-auto" id="list-Floor" role="tabpanel" aria-labelledby="list-Floor-list"><span style="font-size:60px;"> @ViewData["Floor"]. Floor  </span></div>
+                    <div class="tab-pane fade pl-4 m-auto" id="list-price" role="tabpanel" aria-labelledby="list-price-list"><span style="font-size:60px;"> @ViewData["Price"] $</span> </div>
+                    <div class="tab-pane fade pl-4 m-auto" id="list-IsOccupied" role="tabpanel" aria-labelledby="list-IsOccupied-list"><span style="font-size:60px;"> @ViewData["IsOccupied"] </span> </div>
+                    <div class="tab-pane fade pl-4 m-auto" id="list-HasMiniFridge" role="tabpanel" aria-labelledby="list-HasMiniFridge-list"><span style="font-size:60px;"> @ViewData["HasMiniFridge"] </span> </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 m-auto ">
+            <img src="~/images/@ViewData["Slika"]" class="img-fluid h-50 w-100" />
 
         </div>
-
-
-
 
     </div>
-
 </body>
 </html>

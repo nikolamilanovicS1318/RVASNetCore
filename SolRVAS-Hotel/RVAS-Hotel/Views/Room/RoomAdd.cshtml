@@ -9,36 +9,94 @@
 
     @* Pravimo formu koja gađa AddRoom funkciju unutar Room controllera;
         preko forme kupimo podatke koje ubacujemo u MongoDB preko AddRoom funkcije *@
-    @using (Html.BeginForm("AddRoom", "RoomController", FormMethod.Post, new { encType = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        <form enctype="multipart/form-data" runat="server">
-            <label for="RoomNumber">Room number:</label>
-            <input for="RoomNumber" type="text" name="RoomNumber" />
 
-            <label for="NumberOfBeds">Number of beds:</label>
-            <input for="NumberOfBeds" type="number" name="NumberOfBeds" />
+    <div class="col-md-12">
 
-            <label for="Price">Price:</label>
-            <input for="Price" type="number" name="Price" />
 
-            <label for="Floor">Floor:</label>
-            <input for="Floor" type="number" name="Floor" />
-            <label for="IsOccuppied">Is the room occupied?</label>
-            Yes<input type="radio" name="IsOccupied" value="Yes" />
-            No<input type="radio" name="IsOccupied" value="No" />
+        @using (Html.BeginForm("AddRoom", "RoomController", FormMethod.Post, new { encType = "multipart/form-data" }))
+        {
+        <div class="row">
+            @Html.AntiForgeryToken()
+            <form enctype="multipart/form-data" runat="server">
 
-            <label for="HasMiniFridge">Does the room have a mini fridge?</label>
-            Yes <input type="radio" name="HasMiniFridge" value="Yes" />
-            No <input type="radio" name="HasMiniFridge" value="No" />
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="RoomNumber">Room number</label>
+                        <input type="text" class="form-control" id="RoomNumber" name="RoomNumber" aria-describedby="RoomNumber" placeholder="Enter room number">
+                        <small id="RoomNumber" class="form-text text-muted">Please enter the room number.</small>
+                    </div>
 
-            <label for="ImageName">Upload image:</label>
-            <input id="ImageName" type="file" name="ImageName" />
-            <input type="submit" value="Add room" asp-action="AddRoom" />
 
-        </form>
+                    <div class="form-group">
+                        <label for="NumberOfBeds">Number of beds</label>
+                        <input type="text" class="form-control" id="NumberOfBeds" name="NumberOfBeds" aria-describedby="NumberOfBeds" placeholder="Enter number of beds">
+                        <small id="NumberOfBeds" class="form-text text-muted">Please enter the number of beds in room.</small>
+                    </div>
 
-    }
+                    <div class="form-group">
+                        <label for="Price">Price </label>
+                        <input type="text" class="form-control" id="Price" name="Price" aria-describedby="Price" placeholder="Enter price...">
+
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="Floor">Floor </label>
+                        <input type="text" class="form-control" id="Floor" name="Floor" aria-describedby="Floor" placeholder="Enter the room floor">
+                        <small id="Floor" class="form-text text-muted">Please enter the floor of the room.</small>
+
+                    </div>
+
+
+
+                    <label for="IsOccupied">Is the room occupied?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="IsOccupied" id="IsOccupied" value="Yes" checked>
+                        <label class="form-check-label" for="IsOccupied">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="IsOccupied" id="IsOccupied" value="No">
+                        <label class="form-check-label" for="IsOccupied">
+                            No
+                        </label>
+                    </div>
+
+
+                    <label for="HasMiniFridge">Does the room have a mini fridge?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="HasMiniFridge" id="HasMiniFridge" value="Yes" checked>
+                        <label class="form-check-label" for="HasMiniFridge">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="HasMiniFridge" id="HasMiniFridge" value="No">
+                        <label class="form-check-label" for="HasMiniFridge">
+                            No
+                        </label>
+                    </div>
+
+
+
+                    <div class="form-group mt-3">
+                        <label for="ImageName">Upload image</label>
+                        <input type="file" class="form-control-file" id="ImageName" name="ImageName">
+                    </div>
+
+                    <input type="submit" class="btn btn-primary" value="Add room" asp-action="AddRoom" />
+
+                </div>
+            </form>
+        </div>
+         }
+            </div>
+        
+
+    
+
+
 
     @* Proveravamo da li je TempData iz kontrolera prazan; ako nije, znamo da je došlo do neke greške prilikom unosa; koristimo
         JavaScript da prikažemo grešku koju smo spremili u kontroleru*@

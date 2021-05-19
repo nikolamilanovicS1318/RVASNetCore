@@ -13,21 +13,26 @@
 
         @* U foreach petlji prolazimo kroz listu svih soba (koju smo izvukli u kontroleru UserController) i za svaku sobu iz
         MongoDB kolekcije ispisujemo podatke*@
+        <div class="row">
+            @foreach (var x in (List<Room>)ViewData["ListOfRooms"])
+            {
 
-        @foreach (var x in (List<Room>)ViewData["ListOfRooms"])
-        {
+                <div class="col-md-6 mb-4">
 
-            <div class="col-md-4 mb-4">
+                    <dl class="dl-horizontal">
+                        <dt>Room number</dt>
+                        <dd>@x.RoomNumber</dd>
+                        <dt>Price</dt>
+                        <dd>@x.Price $</dd>
+                    </dl>
+                    <img src="~/images/@x.ImageName" class="img-fluid h-50 w-100 rounded" />
 
-                <p>Room number: @x.RoomNumber</p>
-                <p>Price: @x.Price</p>
-                <p><img src="./images/@x.ImageName" /> </p>
-
-                <button type="button" class="btn btn-primary mr-3"> @Html.ActionLink("Update", "RoomEdit", routeValues: new { RoomID = x.RoomID })</button>
-                <button type="button" class="btn btn-danger mr-3"> @Html.ActionLink("Delete", "DeleteRoom", routeValues: new { RoomID = x.RoomID })</button>
-                <button type="button" class="btn btn-primary mr-3"> @Html.ActionLink("More Details", "RoomDetails", routeValues: new { RoomID = x.RoomID })</button>
-            </div>
-        }
+                    <button type="button" class="btn btn-primary mr-3 mt-4"> @Html.ActionLink("Update", "RoomEdit", routeValues: new { RoomID = x.RoomID })</button>
+                    <button type="button" class="btn btn-danger mr-3 mt-4"> @Html.ActionLink("Delete", "DeleteRoom", routeValues: new { RoomID = x.RoomID })</button>
+                    <button type="button" class="btn btn-primary mr-3 mt-4"> @Html.ActionLink("More Details", "RoomDetails", routeValues: new { RoomID = x.RoomID })</button>
+                </div>
+            }
+        </div>
 
         @*@ViewData["API_Rooms"]*@
 
@@ -38,6 +43,7 @@
         <div class="col-md-12">
             <h2>API ROOMS</h2>
         </div>
+
         @{
             var JTList = (List<Newtonsoft.Json.Linq.JToken>)ViewData["Data"];
             foreach (Newtonsoft.Json.Linq.JToken j in JTList)
