@@ -8,55 +8,127 @@
         preko forme kupimo podatke koje ubacujemo u MongoDB preko AddRoom funkcije *@
     @using (Html.BeginForm("UpdateRoom", "RoomController", FormMethod.Post, new { encType = "multipart/form-data" }))
     {
-<form enctype="multipart/form-data" name="Update-Form" method="post">
-    @Html.AntiForgeryToken()
-
-    <label for="RoomNumber">Room number:</label>
-    <input for="RoomNumber" type="text" name="RoomNumber" value="@ViewData["RoomNumber"]" />
-
-    <label for="NumberOfBeds">Number of beds:</label>
-    <input for="NumberOfBeds" type="number" name="NumberOfBeds" value="@ViewData["NumberOfBeds"]" />
-
-    <label for="Price">Price:</label>
-    <input for="Price" type="number" name="Price" value="@ViewData["Price"]" />
-
-    <label for="Floor">Floor:</label>
-    <input for="Floor" type="number" name="Floor" value="@ViewData["Floor"]" />
-    <label for="IsOccupied">Is the room occupied?</label>
+    <div class="row">
+        <form enctype="multipart/form-data" name="Update-Form" method="post">
+            @Html.AntiForgeryToken()
 
 
-    @if (true == Convert.ToBoolean(ViewData["IsOccupied"]))
-    {
-<div>
-    Yes<input type="radio" checked id="IsOccupied" name="IsOccupied" value="Yes" />
-    No<input type="radio" id="IsOccupied" name="IsOccupied" value="No" />
-</div>}
-    @if (false == Convert.ToBoolean(ViewData["IsOccupied"]))
-    {
-<div>
-    Yes<input type="radio" id="IsOccupied" name="IsOccupied" value="Yes" />
-    No<input type="radio" checked id="IsOccupied" name="IsOccupied" value="No" />
-</div>}
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="RoomNumber">Room number</label>
+                    <input type="text" class="form-control" id="RoomNumber" name="RoomNumber" aria-describedby="RoomNumber" value="@ViewData["RoomNumber"]">
+                    <small id="RoomNumber" class="form-text text-muted">Please enter the room number.</small>
+                </div>
 
-    <label for="HasMiniFridge">Does the room have a mini fridge?</label>
-    @if (true == Convert.ToBoolean(ViewData["IsOccupied"]))
-    {
-<div>
-    Yes <input type="radio" checked id="HasMiniFridge" name="HasMiniFridge" value="Yes" />
-    No <input type="radio" id="HasMiniFridge" name="HasMiniFridge" value="No" />
-</div>}
-    @if (true != Convert.ToBoolean(ViewData["IsOccupied"]))
-    {
-<div>
-    Yes <input type="radio" id="HasMiniFridge" name="HasMiniFridge" value="Yes" />
-    No <input type="radio" checked id="HasMiniFridge" name="HasMiniFridge" value="No" />
-</div>}
-    <label for="ImageName">Upload image:</label>
-    <input id="ImageName" type="file" name="ImageName" />
-    <input type="hidden" name="RoomID" value="@ViewData["RoomID"]" />
-    <input type="submit" value="Update" asp-controller="Room" asp-route-id='@ViewData["RoomID"]' asp-action="UpdateRoom" />
 
-</form>}
+                <div class="form-group">
+                    <label for="NumberOfBeds">Number of beds</label>
+                    <input type="text" class="form-control" id="NumberOfBeds" name="NumberOfBeds" aria-describedby="NumberOfBeds" value="@ViewData["NumberOfBeds"]">
+                    <small id="NumberOfBeds" class="form-text text-muted">Please enter the number of beds in room.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="Price">Price </label>
+                    <input type="text" class="form-control" id="Price" name="Price" aria-describedby="Price" value="@ViewData["Price"]">
+
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="Floor">Floor </label>
+                    <input type="text" class="form-control" id="Floor" name="Floor" aria-describedby="Floor" value="@ViewData["Floor"]">
+                    <small id="Floor" class="form-text text-muted">Please enter the floor of the room.</small>
+
+                </div>
+
+                @if (true == Convert.ToBoolean(ViewData["IsOccupied"]))
+                {
+                    <label for="IsOccupied">Is the room occupied?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="IsOccupied" id="IsOccupied" value="Yes" checked>
+                        <label class="form-check-label" for="IsOccupied">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="IsOccupied" id="IsOccupied" value="No">
+                        <label class="form-check-label" for="IsOccupied">
+                            No
+                        </label>
+                    </div>
+                }
+
+                @if (false == Convert.ToBoolean(ViewData["IsOccupied"]))
+                {
+                    <label for="IsOccupied">Is the room occupied?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="IsOccupied" id="IsOccupied" value="Yes">
+                        <label class="form-check-label" for="IsOccupied">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="IsOccupied" id="IsOccupied" value="No" checked>
+                        <label class="form-check-label" for="IsOccupied">
+                            No
+                        </label>
+                    </div>
+                }
+
+                @if (true == Convert.ToBoolean(ViewData["HasMiniFridge"]))
+                {
+                    <label for="HasMiniFridge">Does the room have a mini fridge?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="HasMiniFridge" id="HasMiniFridge" value="Yes" checked>
+                        <label class="form-check-label" for="HasMiniFridge">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="HasMiniFridge" id="HasMiniFridge" value="No">
+                        <label class="form-check-label" for="HasMiniFridge">
+                            No
+                        </label>
+                    </div>
+                }
+                @if (false == Convert.ToBoolean(ViewData["HasMiniFridge"]))
+                {
+                    <label for="HasMiniFridge">Does the room have a mini fridge?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="HasMiniFridge" id="HasMiniFridge" value="Yes">
+                        <label class="form-check-label" for="HasMiniFridge">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="HasMiniFridge" id="HasMiniFridge" value="No" checked>
+                        <label class="form-check-label" for="HasMiniFridge">
+                            No
+                        </label>
+                    </div>
+                }
+
+                <div class="form-group mt-3">
+                    <label for="ImageName">Upload image</label>
+                    <input type="file" class="form-control-file" id="ImageName" name="ImageName">
+                </div>
+
+                <input type="hidden" name="RoomID" value="@ViewData["RoomID"]" />
+
+                <input type="submit" class="btn btn-primary" value="Update" asp-controller="Room" asp-route-id='@ViewData["RoomID"]' asp-action="UpdateRoom" />
+
+            </div>
+
+
+        </form>
+    </div>}
+
+
+
+
+
+
+
 
     @* Proveravamo da li je TempData iz kontrolera prazan; ako nije, znamo da je došlo do neke greške prilikom unosa; koristimo
         JavaScript da prikažemo grešku koju smo spremili u kontroleru*@

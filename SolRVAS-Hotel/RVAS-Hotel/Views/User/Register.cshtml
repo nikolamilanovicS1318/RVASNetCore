@@ -9,28 +9,28 @@
             <section>
                 @Html.AntiForgeryToken()
                 <form id="account" asp-controller="User" asp-action="RegisterUser" method="post">
-                    <h4>Use a local account to log in.</h4>
+                    <h4>Register</h4>
                     <hr />
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
-                        <label for="userName">Username:</label>
-                        <input type="text" id="txtUsername" name="userName" />
+                        <label for="userName">Username </label>
+                        <input type="text" id="txtUsername" name="userName" placeholder="Enter username..." class="form-control" aria-describedby="txtUsername"/>
                     </div>
                     <div class="form-group">
-                        <label for="Name">Name:</label>
-                        <input type="text" id="txtName" name="Name" />
+                        <label for="Name">Name</label>
+                        <input type="text" id="txtName" name="Name" placeholder="Enter your real name..." class="form-control" aria-describedby="txtName"/>
                     </div>
                     <div class="form-group">
-                        <label for="Surname">Surname:</label>
-                        <input type="text" id="txtSurname" name="Surname" />
+                        <label for="Surname">Surname</label>
+                        <input type="text" id="txtSurname" name="Surname" placeholder="Enter your surname..." class="form-control" aria-describedby="txtSurname"/>
                     </div>
                     <div class="form-group">
-                        <label for="Password">Password:</label>
-                        <input type="password" id="Password" name="Password" />
+                        <label for="Password">Password</label>
+                        <input type="password" id="Password" name="Password" placeholder="Enter password..." class="form-control" aria-describedby="Password"/>
                     </div>
                     <div class="form-group">
-                        <label for="Email">Email:</label>
-                        <input type="email" id="txtEmail" name="Email" />
+                        <label for="Email">Email</label>
+                        <input type="email" id="txtEmail" name="Email" placeholder="Enter your email..." class="form-control" aria-describedby="txtEmail"/>
                     </div>
 
                     <div class="form-group">

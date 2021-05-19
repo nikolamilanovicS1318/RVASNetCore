@@ -151,7 +151,7 @@ namespace RVAS_Hotel.Controllers
             // Postavljamo da sesija dobija vrednost ID-a Ulogovanog korisnika
                 HttpContext.Session.SetString("Session", LoggedUser.Id.ToString());
 
-                return RedirectToAction("Index", "Room", routeValues: new { Username = LoggedUser.UserName});
+                return RedirectToAction("Index", "Room");
 
             }
             else
